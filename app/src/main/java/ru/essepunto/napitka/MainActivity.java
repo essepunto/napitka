@@ -23,6 +23,7 @@ import com.google.zxing.qrcode.QRCodeWriter;
 
 public class MainActivity extends AppCompatActivity  implements View.OnClickListener {
     Button scanBtn;
+    Button clearButton;
     EditText inputBar;
     ImageView imageView;
 
@@ -33,9 +34,21 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
         setContentView(R.layout.activity_main);
         inputBar = findViewById(R.id.inputBarcode);
         imageView = findViewById(R.id.imageView);
+        clearButton = findViewById(R.id.clear_button);
 
         scanBtn = findViewById(R.id.scanBtn);
         scanBtn.setOnClickListener(this);
+        clearButton = (Button) findViewById(R.id.clear_button);
+        clearButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                if(inputBar != null)
+                {
+                    inputBar.setText(null);
+                }
+            }
+        });
 
     }
     public void QRCodeButton(View view){
