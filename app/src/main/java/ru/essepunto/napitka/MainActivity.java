@@ -1,5 +1,7 @@
 package ru.essepunto.napitka;
 
+import static android.content.ContentValues.TAG;
+
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,7 +10,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,6 +24,11 @@ import com.google.zxing.common.BitMatrix;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.google.zxing.qrcode.QRCodeWriter;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity  implements View.OnClickListener {
     Button scanBtn;
@@ -41,16 +50,19 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
         clearButton = (Button) findViewById(R.id.clear_button);
         clearButton.setOnClickListener(new View.OnClickListener() {
 
+
             @Override
             public void onClick(View v) {
                 if(inputBar != null)
                 {
                     inputBar.setText(null);
+                    imageView.setImageResource(R.drawable.image);
                 }
             }
         });
 
     }
+
     public void QRCodeButton(View view){
         QRCodeWriter qrCodeWriter = new QRCodeWriter();// QR-code generator object
         //Code128Writer codeWriter = new Code128Writer ();  // Bar-code generator object
@@ -63,11 +75,13 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
                     bitmap.setPixel(x,y,bitMatrix.get(x,y)? Color.BLACK : Color.WHITE);
                 }
             }
-            imageView.setImageBitmap(bitmap);
+
+
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
 
     @Override
     public void onClick(View view) {
