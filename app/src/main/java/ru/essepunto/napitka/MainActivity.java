@@ -1,34 +1,23 @@
 package ru.essepunto.napitka;
 
-import static android.content.ContentValues.TAG;
-
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.google.zxing.qrcode.QRCodeWriter;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity  implements View.OnClickListener {
     Button scanBtn;
@@ -43,23 +32,10 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
         setContentView(R.layout.activity_main);
         inputBar = findViewById(R.id.inputBarcode);
         imageView = findViewById(R.id.imageView);
-        clearButton = findViewById(R.id.clear_button);
 
         scanBtn = findViewById(R.id.scanBtn);
         scanBtn.setOnClickListener(this);
-        clearButton = (Button) findViewById(R.id.clear_button);
-        clearButton.setOnClickListener(new View.OnClickListener() {
 
-
-            @Override
-            public void onClick(View v) {
-                if(inputBar != null)
-                {
-                    inputBar.setText(null);
-                    imageView.setImageResource(R.drawable.image);
-                }
-            }
-        });
 
     }
 
@@ -67,16 +43,14 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
         QRCodeWriter qrCodeWriter = new QRCodeWriter();// QR-code generator object
         //Code128Writer codeWriter = new Code128Writer ();  // Bar-code generator object
         try {
-            BitMatrix bitMatrix = qrCodeWriter.encode(inputBar.getText().toString(), BarcodeFormat.QR_CODE, 400, 400);
-            //BitMatrix bitMatrix = codeWriter.encode(editText.getText().toString(), BarcodeFormat.CODE_128, 200, 40);
-            Bitmap bitmap = Bitmap.createBitmap(400, 400, Bitmap.Config.RGB_565);
-            for (int x = 0; x<400; x++){
-                for (int y=0; y<400; y++){
+            BitMatrix bitMatrix = qrCodeWriter.encode(inputBar.getText().toString(), BarcodeFormat.QR_CODE, 200, 200);
+            Bitmap bitmap = Bitmap.createBitmap(200, 200, Bitmap.Config.RGB_565);
+            for (int x = 0; x<200; x++){
+                for (int y=0; y<200; y++){
                     bitmap.setPixel(x,y,bitMatrix.get(x,y)? Color.BLACK : Color.WHITE);
                 }
             }
-
-
+            imageView.setImageBitmap(bitmap);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -103,7 +77,7 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
         if(result != null){
             if(result.getContents() != null){
 
-                inputBar.append(result.getContents()+"%0A"+"\n");
+                inputBar.append(result.getContents()+"\n");
 
 
 
