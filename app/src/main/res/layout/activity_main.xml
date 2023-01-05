@@ -19,29 +19,29 @@
         app:layout_constraintVertical_bias="0.465"
         app:rippleColor="#42A5F5" />
 
+
     <EditText
         android:id="@+id/inputBarcode"
         android:layout_width="232dp"
         android:layout_height="100dp"
+        android:layout_marginTop="16dp"
         android:digits="0,1,2,3,4,5,6,7,8,9,\n,%0A"
         android:ems="10"
         android:inputType="textMultiLine|number"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.184"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.477"
         tools:ignore="SpeakableTextPresentCheck" />
-
 
     <Button
         android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="152dp"
-        android:layout_marginTop="176dp"
+        android:layout_width="93dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="172dp"
         android:onClick="QRCodeButton"
         android:text="qr_code"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -57,14 +57,13 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="176dp"
-        android:layout_height="190dp"
+        android:layout_width="271dp"
+        android:layout_height="256dp"
         app:layout_constraintBottom_toTopOf="@+id/save_button"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button"
-        app:layout_constraintVertical_bias="0.263"
+        app:layout_constraintVertical_bias="0.433"
         app:srcCompat="@drawable/ic_launcher_background" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

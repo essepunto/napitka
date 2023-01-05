@@ -21,7 +21,6 @@ import com.google.zxing.qrcode.QRCodeWriter;
 
 public class MainActivity extends AppCompatActivity  implements View.OnClickListener {
     Button scanBtn;
-    Button clearButton;
     EditText inputBar;
     ImageView imageView;
 
@@ -38,6 +37,7 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
 
 
     }
+    
 
     public void QRCodeButton(View view){
         QRCodeWriter qrCodeWriter = new QRCodeWriter();// QR-code generator object
