@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">napitka</string>
+    <string name="app_name">Напитка</string>
+    <string name="no">НЕТ!</string>
 </resources>
