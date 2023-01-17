@@ -1,35 +1,34 @@
 package ru.essepunto.napitka;
 
 import android.annotation.SuppressLint;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.google.zxing.qrcode.QRCodeWriter;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity  implements View.OnClickListener {
     Button scanBtn;
+    TextView textView;
     EditText inputBar;
     ImageView imageView;
 
@@ -40,14 +39,7 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
         setContentView(R.layout.activity_main);
         inputBar = findViewById(R.id.inputBarcode);
         imageView = findViewById(R.id.imageView);
-        MainActivity context = this;
-        String code = null;
-        String apiUrl = "https://lenta.com/api/v2/stores/0033/skus/" + code;
-        APIRequest apiRequest = new APIRequest(MainActivity.this);
-
-
-
-
+        textView = findViewById(R.id.textView);
 
         scanBtn = findViewById(R.id.scanBtn);
         scanBtn.setOnClickListener(this);
@@ -71,22 +63,6 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
 
                 }
             });
-
-    @Override
-    public void onBackPressed() {
-        new AlertDialog.Builder(this)
-                .setTitle("Закрыть сканер?")
-                .setMessage("Если вы выйдите,всё что вы просканировали будет удалено")
-                .setNegativeButton(R.string.no,null)
-                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface arg0, int arg1) {
-                        MainActivity.super.onBackPressed();
-                    }
-                }).create().show();
-    }
-
-
-
 
     public void QRCodeButton(View view){
         QRCodeWriter qrCodeWriter = new QRCodeWriter();// QR-code generator object
@@ -126,42 +102,14 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
         if(result != null){
             if(result.getContents() != null){
 
-                String apiUrl = "https://lenta.com/api/v1/stores/0033/skus?barcode=" + result.getContents();
-                APIRequest apiRequest = new APIRequest(MainActivity.this);
-                apiRequest.makeAPIRequest(apiUrl, new APIRequest.VolleyCallback() {
-                    @Override
-                    public void onSuccess(JSONObject result) {
-                        try {
-                            String code = result.getString("code");
-                            inputBar.append(code+"_ST"+"\n");
-                            scanCode();
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-
-                    @SuppressLint("ResourceAsColor")
-                    @Override
-                    public void onError(String error) {
-                        scanCode();
-                        Toast.makeText(MainActivity.this, "Ошибка добавления!\nПопробуйте ещё раз", Toast.LENGTH_SHORT).show();
-                        Toast.makeText(MainActivity.this, "Если ошибка повторяется,\nвведите ШК или артикул вручную", Toast.LENGTH_LONG).show();
-
-
-
-
-                    }
-                });
-
-
-                //inputBar.append(result.getContents()+"\n");
+                inputBar.append(result.getContents()+"\n");
 
 
 
 
             }
             else{
-                Toast.makeText(this,"Сканирование остановлено",Toast.LENGTH_LONG).show();
+                Toast.makeText(this,"Отменено",Toast.LENGTH_LONG).show();
 
             }
         }else{
