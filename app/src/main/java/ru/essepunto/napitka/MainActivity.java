@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -32,6 +33,7 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
     Button scanBtn;
     EditText inputBar;
     ImageView imageView;
+    CheckBox checkBox;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -40,6 +42,7 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
         setContentView(R.layout.activity_main);
         inputBar = findViewById(R.id.inputBarcode);
         imageView = findViewById(R.id.imageView);
+         checkBox = findViewById(R.id.checkBox);
         MainActivity context = this;
         String code = null;
         String apiUrl = "https://lenta.com/api/v2/stores/0033/skus/" + code;
@@ -103,6 +106,7 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
         integrator.setBeepEnabled(false);
         integrator.initiateScan();
 
+
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
@@ -118,7 +122,10 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
                         try {
                             String code = result.getString("code");
                             inputBar.append(code+"_ST"+"\n");
-                            scanCode();
+                            if (checkBox.isChecked()){
+                                scanCode();
+                            }
+
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -127,9 +134,11 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
                     @SuppressLint("ResourceAsColor")
                     @Override
                     public void onError(String error) {
-                        scanCode();
+                        if (checkBox.isChecked()){
+                            scanCode();
+                        }
                         Toast.makeText(MainActivity.this, "Ошибка добавления!\nПопробуйте ещё раз", Toast.LENGTH_SHORT).show();
-                        Toast.makeText(MainActivity.this, "Если ошибка повторяется,\nвведите ШК или артикул вручную", Toast.LENGTH_LONG).show();
+                        Toast.makeText(MainActivity.this, "Если ошибка повторяется,\nвведите ШК вручную", Toast.LENGTH_LONG).show();
 
 
 
