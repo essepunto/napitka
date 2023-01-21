@@ -1,8 +1,11 @@
 package ru.essepunto.napitka;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -18,6 +21,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 
 import com.google.zxing.BarcodeFormat;
@@ -34,6 +39,10 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
     EditText inputBar;
     ImageView imageView;
     CheckBox checkBox;
+    DatabaseHelper myDb;
+    TextView textView;
+    private static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 1;
+
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -43,10 +52,37 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
         inputBar = findViewById(R.id.inputBarcode);
         imageView = findViewById(R.id.imageView);
          checkBox = findViewById(R.id.checkBox);
+        myDb = new DatabaseHelper(this);
+        textView = findViewById(R.id.textView);
         MainActivity context = this;
         String code = null;
         String apiUrl = "https://lenta.com/api/v2/stores/0033/skus/" + code;
         APIRequest apiRequest = new APIRequest(MainActivity.this);
+
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            // Permission is not granted
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                // Show an explanation to the user *asynchronously* -- don't block
+                // this thread waiting for the user's response! After the user
+                // sees the explanation, try again to request the permission.
+            } else {
+                // No explanation needed; request the permission
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
+
+                // MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE is an
+                // app-defined int constant. The callback method gets the
+                // result of the request.
+            }
+        } else {
+            // Permission has already been granted
+        }
+
 
 
 
@@ -117,11 +153,20 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
                 String apiUrl = "https://lenta.com/api/v1/stores/0033/skus?barcode=" + result.getContents();
                 APIRequest apiRequest = new APIRequest(MainActivity.this);
                 apiRequest.makeAPIRequest(apiUrl, new APIRequest.VolleyCallback() {
+                    @SuppressLint("Range")
                     @Override
                     public void onSuccess(JSONObject result) {
                         try {
                             String code = result.getString("code");
+                            myDb.addData(code);
+                            Cursor res = myDb.getData();
+                            String db_codes = "";
+                            while (res.moveToNext()) {
+                                db_codes += res.getString(res.getColumnIndex("id")) + "\n";
+                            }
+                            textView.setText(db_codes);
                             inputBar.append(code+"_ST"+"\n");
+
                             if (checkBox.isChecked()){
                                 scanCode();
                             }

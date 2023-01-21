@@ -7,23 +7,23 @@
     tools:context=".StartActivity">
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/makeButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Делать ценники"
+        android:text="@string/make"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/printButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Сверка цен"
+        android:text="@string/print"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button2"
+        app:layout_constraintTop_toBottomOf="@+id/makeButton"
         app:layout_constraintVertical_bias="0.16" />
 </androidx.constraintlayout.widget.ConstraintLayout>
