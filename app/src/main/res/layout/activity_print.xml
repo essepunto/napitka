@@ -1,33 +1,55 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="top"
-    android:orientation="vertical">
+    tools:context=".PrintActivity">
 
     <ListView
         android:id="@+id/listView"
-        android:layout_width="match_parent"
-        android:layout_height="294dp" />
+        android:layout_width="408dp"
+        android:layout_height="260dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="142dp"
+        android:layout_height="28dp"
+        android:layout_marginTop="20dp"
         android:gravity="center"
-        android:text="QR Код" />
+        android:text="QR Код"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/listView" />
 
     <ImageView
         android:id="@+id/qrImage"
-        android:layout_width="match_parent"
-        android:layout_height="324dp"
-        app:srcCompat="@drawable/galery_icon" />
+        android:layout_width="310dp"
+        android:layout_height="279dp"
+        android:layout_marginTop="12dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView3"
+        app:srcCompat="@drawable/galery_icon"
+        tools:ignore="ImageContrastCheck,ImageContrastCheck,ImageContrastCheck" />
 
     <Button
         android:id="@+id/clearButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="225dp"
+        android:layout_height="48dp"
         android:onClick="ClearButton"
-        android:text="Очистить базу данных" />
+        android:text="Очистить базу данных"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.492"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/qrImage"
+        app:layout_constraintVertical_bias="0.306"
+        tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck,TouchTargetSizeCheck" />
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
