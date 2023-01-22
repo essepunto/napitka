@@ -2,13 +2,18 @@ package ru.essepunto.napitka;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.common.BitMatrix;
@@ -24,10 +29,13 @@ public class PrintActivity extends AppCompatActivity {
     ImageView qrImage;
 
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_print);
+        myDb = new DatabaseHelper(this);
+
 
 
 
@@ -44,7 +52,39 @@ public class PrintActivity extends AppCompatActivity {
 
 
 
+
     }
+
+    public void ClearButton(View view) {
+        // Создаем диалоговое окно подтверждения
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Подтверждение");
+        builder.setMessage("Вы уверены, что хотите удалить все данные?");
+        builder.setPositiveButton("Да", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                myDb.removeAll();
+                // Обновляем источник данных в ArrayAdapter
+                names = myDb.getNames();
+                adapter.clear();
+                adapter.addAll(names);
+                adapter.notifyDataSetChanged();
+                qrImage.setImageResource(R.drawable.galery_icon);
+            }
+        });
+        builder.setNegativeButton("Нет", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // Ничего не делаем, просто закрываем диалог
+                dialog.cancel();
+            }
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+
+
+
     public void QRCodeButton(View view){
         StringBuilder builder = new StringBuilder();
         for (String name : names) {

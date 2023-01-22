@@ -21,12 +21,13 @@
         android:id="@+id/qrImage"
         android:layout_width="match_parent"
         android:layout_height="324dp"
-        app:srcCompat="@android:drawable/ic_menu_gallery" />
+        app:srcCompat="@drawable/galery_icon" />
 
     <Button
-        android:id="@+id/button5"
+        android:id="@+id/clearButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:onClick="ClearButton"
         android:text="Очистить базу данных" />
 
 </LinearLayout>

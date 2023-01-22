@@ -70,12 +70,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COLUMN_DATA, newData);
-        db.update(TABLE_NAME, contentValues, COLUMN_ID + " = ?", new String[] {String.valueOf(id)});
+        db.update("mytable", contentValues, COLUMN_ID + " = ?", new String[] {String.valueOf(id)});
         return true;
     }
 
-    public Integer deleteData (int id) {
+    public void removeAll() {
         SQLiteDatabase db = this.getWritableDatabase();
-        return db.delete(TABLE_NAME, COLUMN_ID + " = ?", new String[] {String.valueOf(id)});
+        db.execSQL("DELETE FROM " + DatabaseHelper.TABLE_NAME);
+        db.execSQL("VACUUM");
     }
 }
