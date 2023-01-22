@@ -94,19 +94,6 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
 
     }
 
-    @Override
-    public void onBackPressed() {
-        new AlertDialog.Builder(this)
-                .setTitle("Закрыть сканер?")
-                .setMessage("Если вы выйдите,всё что вы просканировали будет удалено")
-                .setNegativeButton(R.string.no,null)
-                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface arg0, int arg1) {
-                        MainActivity.super.onBackPressed();
-                    }
-                }).create().show();
-    }
-
 
 
 
@@ -162,10 +149,10 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
                             Cursor res = myDb.getData();
                             String db_codes = "";
                             while (res.moveToNext()) {
-                                db_codes += res.getString(res.getColumnIndex("id")) + "\n";
+                                db_codes += res.getString(res.getColumnIndex("name"));
                             }
                             textView.setText(db_codes);
-                            inputBar.append(code+"_ST"+"\n");
+                            inputBar.append(code+"_ST");
 
                             if (checkBox.isChecked()){
                                 scanCode();
