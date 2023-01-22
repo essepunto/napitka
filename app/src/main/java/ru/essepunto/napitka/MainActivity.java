@@ -36,8 +36,6 @@ import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity  implements View.OnClickListener {
     Button scanBtn;
-    EditText inputBar;
-    ImageView imageView;
     CheckBox checkBox;
     DatabaseHelper myDb;
     TextView textView;
@@ -49,8 +47,7 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        inputBar = findViewById(R.id.inputBarcode);
-        imageView = findViewById(R.id.imageView);
+
          checkBox = findViewById(R.id.checkBox);
         myDb = new DatabaseHelper(this);
         textView = findViewById(R.id.textView);
@@ -98,24 +95,6 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
 
 
 
-    public void QRCodeButton(View view){
-        QRCodeWriter qrCodeWriter = new QRCodeWriter();// QR-code generator object
-        //Code128Writer codeWriter = new Code128Writer ();  // Bar-code generator object
-        try {
-            BitMatrix bitMatrix = qrCodeWriter.encode(inputBar.getText().toString(), BarcodeFormat.QR_CODE, 200, 200);
-            Bitmap bitmap = Bitmap.createBitmap(200, 200, Bitmap.Config.RGB_565);
-            for (int x = 0; x<200; x++){
-                for (int y=0; y<200; y++){
-                    bitmap.setPixel(x,y,bitMatrix.get(x,y)? Color.BLACK : Color.WHITE);
-                }
-            }
-            imageView.setImageBitmap(bitmap);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-
     @Override
     public void onClick(View view) {
         scanCode();
@@ -145,15 +124,10 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
                     public void onSuccess(JSONObject result) {
                         try {
                             String code = result.getString("code");
+                            String title = result.getString("title");
                             myDb.addData(code);
-                            Cursor res = myDb.getData();
-                            String db_codes = "";
-                            while (res.moveToNext()) {
-                                db_codes += res.getString(res.getColumnIndex("name"));
-                            }
-                            textView.setText(db_codes);
-                            inputBar.append(code+"_ST");
-
+                            Toast.makeText(MainActivity.this,"Успешно добавлено",Toast.LENGTH_SHORT).show();
+                            textView.setText(title);
                             if (checkBox.isChecked()){
                                 scanCode();
                             }
