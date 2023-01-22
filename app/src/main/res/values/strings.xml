@@ -1,6 +1,5 @@
 <resources>
-    <string name="app_name">napitka</string>
-    <string name="no">НЕТ!</string>
+    <string name="app_name">Напитка</string>
     <string name="print">Печать</string>
-    <string name="make">Делать ценники</string>
+    <string name="make">Добавить ценники</string>
 </resources>
