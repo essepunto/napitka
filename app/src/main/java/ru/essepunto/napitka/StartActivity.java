@@ -7,22 +7,32 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 public class StartActivity extends AppCompatActivity {
+
+    DatabaseHelper myDb;
+
+
 
     Button scannerButton;
     Button printButton;
     Button instructionButton;
+    TextView counterStart;
 
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.start_main);
+        myDb = new DatabaseHelper(this);
 
         scannerButton = (Button) findViewById(R.id.makeButton);
         printButton = (Button) findViewById(R.id.printButton);
         instructionButton = (Button) findViewById(R.id.instructionButton);
+        counterStart = findViewById(R.id.counter);
+        setCountToTextView();
+
         scannerButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -48,5 +58,17 @@ public class StartActivity extends AppCompatActivity {
             }
         });
 
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setCountToTextView();
+
+    }
+
+    private void setCountToTextView()
+    {
+        String co = myDb.getRecordCount();
+        counterStart.setText("Количество записей в БД:"+co);
     }
 }

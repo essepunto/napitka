@@ -2,4 +2,10 @@
 <resources>
     <string name="make">Добавить ценники</string>
     <string name="instructionButton">Инструкция</string>
+    <string name="search">Поиск</string>
+    <string name="checkbox">Многократно</string>
+    <string name="scan">Скан</string>
+    <string name="empty">Пусто</string>
+    <string name="last_add">Последнее добавление:</string>
+    <string name="input_barcode">Введите ШК</string>
 </resources>

@@ -1,35 +1,20 @@
 package ru.essepunto.napitka;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.database.Cursor;
-import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-
 import android.widget.CheckBox;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
-
-import com.google.zxing.BarcodeFormat;
-import com.google.zxing.common.BitMatrix;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
-import com.google.zxing.qrcode.QRCodeWriter;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -39,7 +24,8 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
     CheckBox checkBox;
     DatabaseHelper myDb;
     TextView textView;
-    private static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 1;
+    TextView counterMain;
+
 
 
     @SuppressLint("MissingInflatedId")
@@ -51,42 +37,12 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
          checkBox = findViewById(R.id.checkBox);
         myDb = new DatabaseHelper(this);
         textView = findViewById(R.id.textView);
-        MainActivity context = this;
-        String code = null;
-        String apiUrl = "https://lenta.com/api/v2/stores/0033/skus/" + code;
-        APIRequest apiRequest = new APIRequest(MainActivity.this);
-
-        if (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.READ_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
-
-            // Permission is not granted
-            // Should we show an explanation?
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                    Manifest.permission.READ_EXTERNAL_STORAGE)) {
-                // Show an explanation to the user *asynchronously* -- don't block
-                // this thread waiting for the user's response! After the user
-                // sees the explanation, try again to request the permission.
-            } else {
-                // No explanation needed; request the permission
-                ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
-
-                // MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE is an
-                // app-defined int constant. The callback method gets the
-                // result of the request.
-            }
-        } else {
-            // Permission has already been granted
-        }
-
-
-
-
+        counterMain = findViewById(R.id.counter);
 
 
         scanBtn = findViewById(R.id.scanBtn);
         scanBtn.setOnClickListener(this);
+        setCountToTextView();
 
 
     }
@@ -126,7 +82,12 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
                             String code = result.getString("code");
                             String title = result.getString("title");
                             myDb.addData(code);
-                            Toast.makeText(MainActivity.this,"Успешно добавлено",Toast.LENGTH_SHORT).show();
+                            Toast toast = Toast.makeText(getApplicationContext(), "Успешно добавлено", Toast.LENGTH_SHORT);
+                            View view = toast.getView();
+                            view.getBackground().setColorFilter(Color.GREEN, PorterDuff.Mode.SRC_IN);
+                            toast.show();
+                            setCountToTextView();
+
                             textView.setText(title);
                             if (checkBox.isChecked()){
                                 scanCode();
@@ -143,9 +104,10 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
                         if (checkBox.isChecked()){
                             scanCode();
                         }
-                        Toast.makeText(MainActivity.this, "Ошибка добавления!\nПопробуйте ещё раз", Toast.LENGTH_SHORT).show();
-                        Toast.makeText(MainActivity.this, "Если ошибка повторяется,\nвведите ШК вручную", Toast.LENGTH_LONG).show();
-
+                        Toast toast = Toast.makeText(getApplicationContext(), "Не добавлено!", Toast.LENGTH_SHORT);
+                        View view = toast.getView();
+                        view.getBackground().setColorFilter(Color.RED, PorterDuff.Mode.SRC_IN);
+                        toast.show();
 
 
 
@@ -166,5 +128,17 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
         }else{
             super.onActivityResult(requestCode,resultCode,data);
         }
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setCountToTextView();
+
+    }
+
+    private void setCountToTextView()
+    {
+        String co = myDb.getRecordCount();
+        counterMain.setText("Количество записей в БД:"+co);
     }
 }

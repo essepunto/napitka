@@ -9,6 +9,8 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -35,6 +37,17 @@ public class PrintActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_print);
         myDb = new DatabaseHelper(this);
+        // Get the current window
+        Window window = getWindow();
+
+        // Create a LayoutParams object
+        WindowManager.LayoutParams layoutParams = window.getAttributes();
+
+        // Set the screen brightness to maximum
+        layoutParams.screenBrightness = 1.0f;
+
+        // Apply the changes
+        window.setAttributes(layoutParams);
 
 
 
@@ -95,10 +108,10 @@ public class PrintActivity extends AppCompatActivity {
         QRCodeWriter qrCodeWriter = new QRCodeWriter();// QR-code generator object
         //Code128Writer codeWriter = new Code128Writer ();  // Bar-code generator object
         try {
-            BitMatrix bitMatrix = qrCodeWriter.encode(qr, BarcodeFormat.QR_CODE, 200, 200);
-            Bitmap bitmap = Bitmap.createBitmap(200, 200, Bitmap.Config.RGB_565);
-            for (int x = 0; x<200; x++){
-                for (int y=0; y<200; y++){
+            BitMatrix bitMatrix = qrCodeWriter.encode(qr, BarcodeFormat.QR_CODE, 400, 400);
+            Bitmap bitmap = Bitmap.createBitmap(400, 400, Bitmap.Config.RGB_565);
+            for (int x = 0; x<400; x++){
+                for (int y=0; y<400; y++){
                     bitmap.setPixel(x,y,bitMatrix.get(x,y)? Color.BLACK : Color.WHITE);
                 }
             }

@@ -79,4 +79,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DELETE FROM " + DatabaseHelper.TABLE_NAME);
         db.execSQL("VACUUM");
     }
+
+        public String getRecordCount() {
+
+            SQLiteDatabase db = this.getReadableDatabase();
+            Cursor cursor = db.rawQuery("SELECT COUNT(*) FROM " + TABLE_NAME, null);
+            cursor.moveToFirst();
+            int count = cursor.getInt(0);
+            cursor.close();
+            return String.valueOf(count);
+
+        }
+
+
+
 }
