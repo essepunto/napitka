@@ -8,8 +8,8 @@
 
     <ListView
         android:id="@+id/listView"
-        android:layout_width="310dp"
-        android:layout_height="265dp"
+        android:layout_width="344dp"
+        android:layout_height="136dp"
         android:layout_marginTop="4dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.466"
@@ -30,8 +30,8 @@
 
     <ImageView
         android:id="@+id/qrImage"
-        android:layout_width="310dp"
-        android:layout_height="279dp"
+        android:layout_width="398dp"
+        android:layout_height="277dp"
         android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
@@ -48,10 +48,9 @@
         android:text="Очистить базу данных"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/qrImage"
-        app:layout_constraintVertical_bias="0.306"
+        app:layout_constraintVertical_bias="0.185"
         tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck,TouchTargetSizeCheck" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

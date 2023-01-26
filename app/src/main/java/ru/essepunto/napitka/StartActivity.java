@@ -2,6 +2,7 @@ package ru.essepunto.napitka;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -11,7 +12,9 @@ public class StartActivity extends AppCompatActivity {
 
     Button scannerButton;
     Button printButton;
+    Button instructionButton;
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,6 +22,7 @@ public class StartActivity extends AppCompatActivity {
 
         scannerButton = (Button) findViewById(R.id.makeButton);
         printButton = (Button) findViewById(R.id.printButton);
+        instructionButton = (Button) findViewById(R.id.instructionButton);
         scannerButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -35,5 +39,14 @@ public class StartActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        instructionButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(StartActivity.this, instruction.class);
+                startActivity(intent);
+            }
+        });
+
     }
 }
