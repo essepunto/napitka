@@ -82,11 +82,7 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
                             String code = result.getString("code");
                             String title = result.getString("title");
                             myDb.addData(code);
-                            Toast toast = Toast.makeText(getApplicationContext(), "Успешно добавлено", Toast.LENGTH_SHORT);
-                            View view = toast.getView();
-                            view.getBackground().setColorFilter(Color.GREEN, PorterDuff.Mode.SRC_IN);
-                            toast.show();
-                            setCountToTextView();
+                            Toast.makeText(getApplicationContext(), "Успешно добавлено", Toast.LENGTH_SHORT);
 
                             textView.setText(title);
                             if (checkBox.isChecked()){
@@ -104,10 +100,8 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
                         if (checkBox.isChecked()){
                             scanCode();
                         }
-                        Toast toast = Toast.makeText(getApplicationContext(), "Не добавлено!", Toast.LENGTH_SHORT);
-                        View view = toast.getView();
-                        view.getBackground().setColorFilter(Color.RED, PorterDuff.Mode.SRC_IN);
-                        toast.show();
+                        Toast.makeText(getApplicationContext(), "Не добавлено!", Toast.LENGTH_SHORT);
+
 
 
 
