@@ -78,11 +78,12 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
                     public void onSuccess(JSONObject result) {
                         try {
                             String code = result.getString("code");
-                            String title = result.getString("title");
-                            myDb.addData(code);
+                            String name = result.getString("title");
+                            myDb.addData(code,name);
+                            setCountToTextView();
                             Toast.makeText(MainActivity.this, "Успешно добавлено", Toast.LENGTH_SHORT).show();
 
-                            textView.setText(title);
+                            textView.setText(name);
                             if (checkBox.isChecked()){
                                 scanCode();
                             }

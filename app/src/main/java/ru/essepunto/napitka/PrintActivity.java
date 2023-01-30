@@ -26,6 +26,8 @@ import java.util.ArrayList;
 public class PrintActivity extends AppCompatActivity {
     DatabaseHelper myDb;
     ArrayList<String> names;
+    ArrayList<String> namesAndData;
+
     ListView listView;
     ArrayAdapter<String> adapter;
     ImageView qrImage;
@@ -57,8 +59,9 @@ public class PrintActivity extends AppCompatActivity {
 // inside onCreate or onViewCreated method
         DatabaseHelper databaseHelper = new DatabaseHelper(this);
         names = databaseHelper.getNames();
+        namesAndData = databaseHelper.getNamesAndData();
         listView = (ListView) findViewById(R.id.listView);
-        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, names);
+        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, namesAndData);
         listView.setAdapter(adapter);
         qrImage = (ImageView) findViewById(R.id.qrImage);
         QRCodeButton(qrImage);
@@ -78,9 +81,9 @@ public class PrintActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 myDb.removeAll();
                 // Обновляем источник данных в ArrayAdapter
-                names = myDb.getNames();
+                namesAndData = myDb.getNamesAndData();
                 adapter.clear();
-                adapter.addAll(names);
+                adapter.addAll(namesAndData);
                 adapter.notifyDataSetChanged();
                 qrImage.setImageResource(R.drawable.galery_icon);
             }
@@ -108,10 +111,10 @@ public class PrintActivity extends AppCompatActivity {
         QRCodeWriter qrCodeWriter = new QRCodeWriter();// QR-code generator object
         //Code128Writer codeWriter = new Code128Writer ();  // Bar-code generator object
         try {
-            BitMatrix bitMatrix = qrCodeWriter.encode(qr, BarcodeFormat.QR_CODE, 400, 400);
-            Bitmap bitmap = Bitmap.createBitmap(400, 400, Bitmap.Config.RGB_565);
-            for (int x = 0; x<400; x++){
-                for (int y=0; y<400; y++){
+            BitMatrix bitMatrix = qrCodeWriter.encode(qr, BarcodeFormat.QR_CODE, 1000, 1000);
+            Bitmap bitmap = Bitmap.createBitmap(1000, 1000, Bitmap.Config.RGB_565);
+            for (int x = 0; x<1000; x++){
+                for (int y=0; y<1000; y++){
                     bitmap.setPixel(x,y,bitMatrix.get(x,y)? Color.BLACK : Color.WHITE);
                 }
             }
