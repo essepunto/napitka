@@ -18,6 +18,7 @@ public class StartActivity extends AppCompatActivity {
     Button scannerButton;
     Button printButton;
     Button instructionButton;
+    Button aboutProduct;
     TextView counterStart;
 
     @SuppressLint("MissingInflatedId")
@@ -28,6 +29,7 @@ public class StartActivity extends AppCompatActivity {
         myDb = new DatabaseHelper(this);
 
         scannerButton = (Button) findViewById(R.id.makeButton);
+        aboutProduct = (Button) findViewById(R.id.about_product_button);
         printButton = (Button) findViewById(R.id.printButton);
         instructionButton = (Button) findViewById(R.id.instructionButton);
         counterStart = findViewById(R.id.counter);
@@ -54,6 +56,14 @@ public class StartActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(StartActivity.this, instruction.class);
+                startActivity(intent);
+            }
+        });
+        aboutProduct.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(StartActivity.this, AboutProduct.class);
                 startActivity(intent);
             }
         });

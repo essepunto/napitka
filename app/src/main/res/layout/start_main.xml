@@ -49,4 +49,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/about_product_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Инфо о товаре"
+        app:layout_constraintBottom_toTopOf="@+id/makeButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/counter" />
 </androidx.constraintlayout.widget.ConstraintLayout>
