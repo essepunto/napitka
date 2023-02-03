@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
         integrator.setCaptureActivity(CaptureAct.class);
         integrator.setOrientationLocked(true);
         integrator.setDesiredBarcodeFormats(IntentIntegrator.PRODUCT_CODE_TYPES);
-        integrator.setPrompt("Сканирование");
+        integrator.setPrompt("Просканируйте ШК товара");
         integrator.setBeepEnabled(false);
         integrator.initiateScan();
 

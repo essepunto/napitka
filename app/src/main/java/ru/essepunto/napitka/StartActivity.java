@@ -29,7 +29,7 @@ public class StartActivity extends AppCompatActivity {
         myDb = new DatabaseHelper(this);
 
         scannerButton = (Button) findViewById(R.id.makeButton);
-        aboutProduct = (Button) findViewById(R.id.about_product_button);
+        aboutProduct = (Button) findViewById(R.id.check_price_button);
         printButton = (Button) findViewById(R.id.printButton);
         instructionButton = (Button) findViewById(R.id.instructionButton);
         counterStart = findViewById(R.id.counter);
@@ -63,7 +63,7 @@ public class StartActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(StartActivity.this, AboutProduct.class);
+                Intent intent = new Intent(StartActivity.this, CheckPrice.class);
                 startActivity(intent);
             }
         });

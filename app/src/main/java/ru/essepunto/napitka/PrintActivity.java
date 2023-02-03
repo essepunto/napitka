@@ -108,8 +108,7 @@ public class PrintActivity extends AppCompatActivity {
         }
         String qr = builder.toString();
 
-        QRCodeWriter qrCodeWriter = new QRCodeWriter();// QR-code generator object
-        //Code128Writer codeWriter = new Code128Writer ();  // Bar-code generator object
+        QRCodeWriter qrCodeWriter = new QRCodeWriter();
         try {
             BitMatrix bitMatrix = qrCodeWriter.encode(qr, BarcodeFormat.QR_CODE, 1000, 1000);
             Bitmap bitmap = Bitmap.createBitmap(1000, 1000, Bitmap.Config.RGB_565);
