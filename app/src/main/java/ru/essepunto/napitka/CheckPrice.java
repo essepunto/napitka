@@ -23,6 +23,10 @@ public class CheckPrice extends AppCompatActivity implements View.OnClickListene
     TextView noCardPrice;
     TextView isCorrect;
     TextView nameTittle;
+    TextView textCounter;
+    DatabaseHelper myDb;
+    String co = "0";
+
 
 
 
@@ -37,6 +41,12 @@ public class CheckPrice extends AppCompatActivity implements View.OnClickListene
         noCardSite = findViewById(R.id.no_card_site);
         isCorrect = findViewById(R.id.is_correct);
         nameTittle = findViewById(R.id.nameTittle);
+        textCounter = findViewById(R.id.textCounter);
+        myDb = new DatabaseHelper(this);
+
+
+        textCounter.setText("Количество записей в БД:"+co);
+
 
 
 
@@ -74,6 +84,7 @@ public class CheckPrice extends AppCompatActivity implements View.OnClickListene
                     @Override
                     public void onSuccess(JSONObject result) {
                         try {
+                            String code = result.getString("code");
                             String name = result.getString("title");
                             String regularPriceBySite = result.getString("regularPrice");
                             String discountPriceBySite = result.getString("discountPrice");
@@ -89,11 +100,19 @@ public class CheckPrice extends AppCompatActivity implements View.OnClickListene
                             {
                                 isCorrect.setTextColor(Color.GREEN);
                                 isCorrect.setText("Цена корректна");
+                                Toast.makeText(CheckPrice.this, "Цена корректна", Toast.LENGTH_SHORT).show();
+
                             }
                             else
                             {
                                 isCorrect.setTextColor(Color.RED);
                                 isCorrect.setText("Цена не корректна!");
+                                Toast.makeText(CheckPrice.this, "Цена не корректна!", Toast.LENGTH_SHORT).show();
+                                myDb.addData(name,code);
+                                String co = myDb.getRecordCount();
+                                textCounter.setText("Количество записей в БД:"+co);
+
+
                             }
 
 
@@ -107,7 +126,7 @@ public class CheckPrice extends AppCompatActivity implements View.OnClickListene
                     @SuppressLint("ResourceAsColor")
                     @Override
                     public void onError(String error) {
-                        Toast.makeText(CheckPrice.this, "Ошибка", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(CheckPrice.this, "Пожалуйста,отсканируйте QR ценника!", Toast.LENGTH_SHORT).show();
 
 
                     }
@@ -120,5 +139,13 @@ public class CheckPrice extends AppCompatActivity implements View.OnClickListene
         }else{
             super.onActivityResult(requestCode,resultCode,data);
         }
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        textCounter.setText("Количество записей в БД:"+co);
+
+
+
     }
 }
