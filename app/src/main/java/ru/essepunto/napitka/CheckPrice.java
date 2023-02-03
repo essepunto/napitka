@@ -108,7 +108,7 @@ public class CheckPrice extends AppCompatActivity implements View.OnClickListene
                                 isCorrect.setTextColor(Color.RED);
                                 isCorrect.setText("Цена не корректна!");
                                 Toast.makeText(CheckPrice.this, "Цена не корректна!", Toast.LENGTH_SHORT).show();
-                                myDb.addData(name,code);
+                                myDb.addData(code,name);
                                 String co = myDb.getRecordCount();
                                 textCounter.setText("Количество записей в БД:"+co);
 
