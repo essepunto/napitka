@@ -78,21 +78,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-    public Cursor getData() {
-        SQLiteDatabase db = this.getWritableDatabase();
-        String query = "SELECT * FROM " + TABLE_NAME;
-        Cursor data = db.rawQuery(query, null);
-        return data;
-    }
-
-    public boolean updateData(String newData, int id) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(COLUMN_NAME, newData);
-        db.update("mytable", contentValues, COLUMN_ID + " = ?", new String[] {String.valueOf(id)});
-        return true;
-    }
-
     public void removeAll() {
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("DELETE FROM " + DatabaseHelper.TABLE_NAME);

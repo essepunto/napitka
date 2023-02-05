@@ -39,31 +39,22 @@ public class PrintActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_print);
         myDb = new DatabaseHelper(this);
-        // Get the current window
+
+        //выкручиваем яркость дисплея на максимум,для лучшего скана QR кода
         Window window = getWindow();
-
-        // Create a LayoutParams object
         WindowManager.LayoutParams layoutParams = window.getAttributes();
-
-        // Set the screen brightness to maximum
         layoutParams.screenBrightness = 1.0f;
-
-        // Apply the changes
         window.setAttributes(layoutParams);
 
 
-
-
-
-
-// inside onCreate or onViewCreated method
+        //создаём экземпляр класса DatabaseHelper
         DatabaseHelper databaseHelper = new DatabaseHelper(this);
         names = databaseHelper.getNames();
         namesAndData = databaseHelper.getNamesAndData();
-        listView = (ListView) findViewById(R.id.listView);
+        listView =  findViewById(R.id.listView);
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, namesAndData);
         listView.setAdapter(adapter);
-        qrImage = (ImageView) findViewById(R.id.qrImage);
+        qrImage = findViewById(R.id.qrImage);
         QRCodeButton(qrImage);
 
 
