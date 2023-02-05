@@ -24,6 +24,7 @@ public class CheckPrice extends AppCompatActivity implements View.OnClickListene
     TextView isCorrect;
     TextView nameTittle;
     TextView textCounter;
+    TextView offerDescription;
     DatabaseHelper myDb;
     String co = "0";
 
@@ -42,6 +43,7 @@ public class CheckPrice extends AppCompatActivity implements View.OnClickListene
         isCorrect = findViewById(R.id.is_correct);
         nameTittle = findViewById(R.id.nameTittle);
         textCounter = findViewById(R.id.textCounter);
+        offerDescription = findViewById(R.id.offer_description);
         myDb = new DatabaseHelper(this);
 
 
@@ -88,6 +90,7 @@ public class CheckPrice extends AppCompatActivity implements View.OnClickListene
                             String name = result.getString("title");
                             String regularPriceBySite = result.getString("regularPrice");
                             String discountPriceBySite = result.getString("discountPrice");
+                            String offerDescriptionBySite = result.getString("offerDescription");
                             String regularPrice = String.valueOf(qrData.getPrice1());
                             String discountPrice = String.valueOf(qrData.getPrice2());
 
@@ -98,9 +101,20 @@ public class CheckPrice extends AppCompatActivity implements View.OnClickListene
                             nameTittle.setText(name);
                             if (regularPrice.equals(regularPriceBySite) && discountPrice.equals(discountPriceBySite))
                             {
+                                if(!offerDescriptionBySite.equals("")){
+                                    offerDescription.setText("Скидка "+offerDescriptionBySite);
+
+                                }
+                                else {
+                                    offerDescription.setText("");
+
+                                }
+
                                 isCorrect.setTextColor(Color.GREEN);
                                 isCorrect.setText("Цена корректна");
                                 Toast.makeText(CheckPrice.this, "Цена корректна", Toast.LENGTH_SHORT).show();
+
+
 
                             }
                             else
