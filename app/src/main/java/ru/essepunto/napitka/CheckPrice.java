@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,6 +26,7 @@ public class CheckPrice extends AppCompatActivity implements View.OnClickListene
     TextView nameTittle;
     TextView textCounter;
     TextView offerDescription;
+    CheckBox checkBoxPrice;
     DatabaseHelper myDb;
     String co = "0";
 
@@ -44,6 +46,7 @@ public class CheckPrice extends AppCompatActivity implements View.OnClickListene
         nameTittle = findViewById(R.id.nameTittle);
         textCounter = findViewById(R.id.textCounter);
         offerDescription = findViewById(R.id.offer_description);
+        checkBoxPrice = findViewById(R.id.checkBoxPrice);
         myDb = new DatabaseHelper(this);
 
 
@@ -99,6 +102,9 @@ public class CheckPrice extends AppCompatActivity implements View.OnClickListene
                             noCardPrice.setText(regularPrice);
                             byCardPrice.setText(discountPrice);
                             nameTittle.setText(name);
+                            if (checkBoxPrice.isChecked()){
+                                scanCode();
+                            }
                             if (regularPrice.equals(regularPriceBySite) && discountPrice.equals(discountPriceBySite))
                             {
                                 if(!offerDescriptionBySite.equals("")){
@@ -125,6 +131,9 @@ public class CheckPrice extends AppCompatActivity implements View.OnClickListene
                                 myDb.addData(code,name);
                                 String co = myDb.getRecordCount();
                                 textCounter.setText("Количество записей в БД:"+co);
+                                if (checkBoxPrice.isChecked()){
+                                    scanCode();
+                                }
 
 
                             }
